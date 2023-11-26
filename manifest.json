@@ -1,0 +1,78 @@
+{
+  "author": "Ashutosh Kumar Choudhary",
+  "manifest_version": 3,
+  "name": "Scrapperx.etx",
+  "version": "1.0.0",
+  "description": "Boost your creativity and productivity by 10x using the latest in AI and enhance business outcomes.", 
+  "host_permissions": [
+    "https://mail.google.com/*"
+  ],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "createContent.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://outlook.live.com/*"
+      ],
+      "css": [
+        "mail.css"
+      ],
+      "js": [
+        "mail.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "css": [
+        "linkedInContent.css"
+      ],
+      "js": [
+        "linkedInContent.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://twitter.com/*"
+      ],
+      "css": [
+        "twitterContent.css"
+      ],
+      "js": [
+        "twitterContent.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.instagram.com/*"
+      ],
+      "css": [
+        "instagramContent.css"
+      ],
+      "js": [
+        "instagramContent.js"
+      ]
+    }
+  ]
+}
