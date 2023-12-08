@@ -3,27 +3,27 @@
   "manifest_version": 3,
   "name": "Scrapperx.etx",
   "version": "1.0.0",
-  "description": "Boost your creativity and productivity by 10x using the latest in AI and enhance business outcomes.", 
-  "host_permissions": [
-    "https://mail.google.com/*"
-  ],
+  "description": "Boost your creativity and productivity by 10x using the latest in AI and enhance business outcomes.",
   "permissions": [
     "activeTab",
     "storage",
     "contextMenus",
-    "tabs"
+    "tabs",
+    "https://www.google.com/*", 
+    "https://www.google.com/maps/*", 
+    "https://portal.nebosh.org.uk/*", 
+    "https://www.iosh.co.uk/*" 
   ],
-  "background": {
-    "service_worker": "background.js",
-    "type": "module"
-  },
   "action": {
     "default_popup": "popup/popup.html"
   },
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "https://www.google.com/*",
+        "https://www.google.com/maps/*",
+        "https://portal.nebosh.org.uk/*",
+        "https://www.iosh.co.uk/*"
       ],
       "js": [
         "scrapper.js"
