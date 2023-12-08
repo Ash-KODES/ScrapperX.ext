@@ -26,52 +26,7 @@
         "<all_urls>"
       ],
       "js": [
-        "createContent.js"
-      ]
-    },
-    {
-      "matches": [
-        "https://mail.google.com/*",
-        "https://outlook.live.com/*"
-      ],
-      "css": [
-        "mail.css"
-      ],
-      "js": [
-        "mail.js"
-      ]
-    },
-    {
-      "matches": [
-        "https://www.linkedin.com/*"
-      ],
-      "css": [
-        "linkedInContent.css"
-      ],
-      "js": [
-        "linkedInContent.js"
-      ]
-    },
-    {
-      "matches": [
-        "https://twitter.com/*"
-      ],
-      "css": [
-        "twitterContent.css"
-      ],
-      "js": [
-        "twitterContent.js"
-      ]
-    },
-    {
-      "matches": [
-        "https://www.instagram.com/*"
-      ],
-      "css": [
-        "instagramContent.css"
-      ],
-      "js": [
-        "instagramContent.js"
+        "scrapper.js"
       ]
     }
   ]
