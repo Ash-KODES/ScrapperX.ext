@@ -1,11 +1,10 @@
 // popup.js
-document.addEventListener("DOMContentLoaded", function () {
-  // Function to handle the button click
-  function scrapData() {
-    
-    alert("Scraping data and downloading CSV...");
-  }
+import { scrapeData } from "../gSearchScrapper.js";
 
-  // Attach the click event listener to the button
-  document.getElementById("scrapButton").addEventListener("click", scrapData);
+document.addEventListener("DOMContentLoaded", function () {
+  const URL = "https://example.com"; // Replace with the actual URL
+
+  document.getElementById("scrapButton").addEventListener("click", function () {
+    console.log("Ayayaya");
+  });
 });
