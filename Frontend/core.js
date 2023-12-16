@@ -1,17 +1,32 @@
+document.getElementById("submitButton").addEventListener("click", sendData);
+
 function sendData() {
-  // Get the text from the input box
   var inputData = document.getElementById("inputBox").value;
 
-  // Check if the input is not empty
   if (inputData.trim() !== "") {
-    // Send data to the server (you need to implement this part)
-    // For demonstration purposes, alert the data
-    alert("Data sent to server: " + inputData);
+    var dataToSend = {
+      text: inputData,
+    };
+
+    fetch("/scrape", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToSend),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Scraping completed:", data);
+
+        // Display download link
+        document.getElementById("downloadLink").href = data.csvLink;
+        document.getElementById("downloadLink").style.display = "inline";
+      })
+      .catch((error) => {
+        console.error("Error sending data to server:", error);
+      });
   } else {
-    // Alert user if input is empty
     alert("Please enter some text before submitting.");
   }
 }
-
-// Optionally, you can attach the event listener dynamically
-document.getElementById("submitButton").addEventListener("click", sendData);

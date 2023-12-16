@@ -1,12 +1,7 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const Papa = require("papaparse");
-function extractSearchTextFromGoogleUrl(url) {
-  const urlObject = new URL(url);
-  const searchParams = urlObject.searchParams;
-  const searchText = searchParams.get("q");
-  return searchText;
-}
+
 async function extractSearchTextAndScrape(url) {
   const searchList = [];
   let urls = "";
@@ -97,15 +92,10 @@ async function extractSearchTextAndScrape(url) {
 
   console.log(JSON.stringify(extractedData, null, 2));
 
-  // Write data to CSV or other formats as needed
-  const jsonData = JSON.stringify(extractedData, null, 2);
-  fs.writeFileSync("contact_information.json", jsonData);
-
-  const csvData = Papa.unparse(extractedData);
-  fs.writeFileSync("contact_information.csv", csvData);
-
   await browser.close();
+
+  return extractedData;
 }
-extractSearchTextAndScrape(
-  "https://www.iosh.co.uk/Training/Trainer-directory.aspx"
-);
+
+
+module.exports = { extractSearchTextAndScrape };
