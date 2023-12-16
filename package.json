@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "fs": "^0.0.1-security",
-    "papaparse": "^5.4.1",
-    "prompt-sync": "^4.2.0",
-    "puppeteer": "^21.6.0"
-  }
-}
