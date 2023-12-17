@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HK Info Extractor</title>
     <link rel="stylesheet" href="core.css">
@@ -13,7 +14,9 @@
         <br>
         <input type="text" id="inputBox" placeholder="Enter your text you need to scrap !">
         <button id="submitButton">Submit</button>
-        <a id="downloadLink" style="display: none;">Download CSV</a>
+        <div id="spinner" style="display: none;">Loading...</div>
+        <a id="downloadLink" style="display: none;" download="extracted_data.json">Download JSON</a>
+        <div id="result"></div>
     </div>
     <script src="core.js"></script>
 </body>

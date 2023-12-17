@@ -33,8 +33,33 @@ h1 {
     cursor: pointer;
 }
 
+#spinner {
+    display: none;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+#result {
+    border: 1px solid #eb4e4e;
+    padding: 10px;
+    margin-top: 20px;
+    overflow: auto; /* Add overflow for better scrolling if needed */
+}
+
 #downloadLink {
-    padding: 20px;
-    font-size: 18px;
+    display: none;
+    margin-top: 10px;
+    font-size: 16px;
+    color: #3498db; /* Blue color */
     cursor: pointer;
+    text-decoration: none;
+    border: 1px solid #3498db; /* Border color same as text color */
+    padding: 8px;
+    border-radius: 5px; /* Rounded corners */
+    background-color: #fff; /* White background */
+}
+
+#downloadLink:hover {
+    background-color: #3498db;
+    color: #fff; /* Text color on hover */
 }

@@ -10,9 +10,8 @@ async function extractSearchTextAndScrape(url) {
   const page = await browser.newPage();
   await page.goto("https://google.com");
 
-  const query = extractSearchTextFromGoogleUrl(url);
-  searchList.push(query);
-
+  searchList.push(url);
+  const query = url;
   console.log(await page.evaluate(() => location.href), "first one");
 
   const results = await page.evaluate((query) => {
@@ -96,6 +95,5 @@ async function extractSearchTextAndScrape(url) {
 
   return extractedData;
 }
-
 
 module.exports = { extractSearchTextAndScrape };
