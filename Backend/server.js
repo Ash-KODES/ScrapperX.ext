@@ -5,9 +5,26 @@ const { extractSearchTextAndScrape } = require("./gSearchScrapper");
 
 const app = express();
 const port = 3000;
-app.use(cors());
 
+app.use(cors());
 app.use(bodyParser.json());
+
+// Route to display an HTML page with an <h1> heading
+app.get("/", (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Server is Running</title>
+    </head>
+    <body>
+      <h1>Server is running on port ${port}</h1>
+    </body>
+    </html>
+  `);
+});
 
 app.post("/scrape", async (req, res) => {
   const inputData = req.body.text;
