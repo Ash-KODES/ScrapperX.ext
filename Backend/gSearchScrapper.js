@@ -5,8 +5,11 @@ const Papa = require("papaparse");
 async function extractSearchTextAndScrape(url) {
   const searchList = [];
   let urls = "";
-
-  const browser = await puppeteer.launch();
+  
+  const browser = await puppeteer.launch({
+    headless: false,
+    args: ["--headless"],
+  });
   const page = await browser.newPage();
   await page.goto("https://google.com");
 
