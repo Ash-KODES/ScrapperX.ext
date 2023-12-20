@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { extractSearchTextAndScrape } = require("./gSearchScrapper");
+const { extractSearchTextAndScrape } = require("./gSearchScrapperWithScrolling");
 
 const app = express();
 const port = 3000;

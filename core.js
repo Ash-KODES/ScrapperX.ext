@@ -11,7 +11,7 @@ function sendData() {
     // Show spinner while waiting for the server response
     document.getElementById("spinner").style.display = "block";
 
-    fetch("http://3.80.185.132:3000/scrape", {
+    fetch("http://127.0.0.1:3000/scrape", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

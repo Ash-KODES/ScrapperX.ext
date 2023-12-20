@@ -5,10 +5,13 @@ const Papa = require("papaparse");
 async function extractSearchTextAndScrape(url) {
   const searchList = [];
   let urls = "";
-  
-  const browser = await puppeteer.launch({
-    headless: false,
-    args: ["--headless"],
+  let browser = await puppeteer.launch({
+    args: [
+      "--disable-gpu",
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--no-zygote",
+    ],
   });
   const page = await browser.newPage();
   await page.goto("https://google.com");
@@ -51,6 +54,8 @@ async function extractSearchTextAndScrape(url) {
   const extractedData = [];
 
   const urlArray = urls.split("\n").filter(Boolean);
+
+  console.log(urlArray);
 
   for (const url of urlArray) {
     let emails = [];
