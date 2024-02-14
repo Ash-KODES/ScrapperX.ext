@@ -1,8 +1,10 @@
 const puppeteer = require("puppeteer");
+const fs = require("fs");
 
 async function extractSearchTextAndScrape(url) {
   let browser = await puppeteer.launch({
     headless: false,
+    defaultViewport: false,
     args: [
       "--disable-gpu",
       "--disable-setuid-sandbox",
@@ -11,8 +13,15 @@ async function extractSearchTextAndScrape(url) {
     ],
   });
   let page = await browser.newPage();
-  await page.goto("https://google.com");
-  const maxResults = 500;
+  await page.goto("https://google.com", {
+    waitUntil: 'networkidle2',
+    timeout: 0
+  });
+
+  // await new Promise(r => setTimeout(r, 1000 * 5));
+  // change this to whatever number of result you want
+  const maxResults = 50;
+
   const query = url;
   console.log(await page.evaluate(() => location.href), "first one");
 
@@ -29,23 +38,50 @@ async function extractSearchTextAndScrape(url) {
 
   let extractedWebsite = [];
   let totalResults = 0;
+  let btnClicked = false;
 
   while (totalResults < maxResults) {
+
     const resultsOnPage = await scrapeCurrentPage(page);
     extractedWebsite = extractedWebsite.concat(resultsOnPage);
     totalResults = extractedWebsite.length;
+    console.log("Total results:", totalResults);
 
-    if (totalResults < maxResults) {
-      await page.evaluate(() => {
-        window.scrollTo(0, document.body.scrollHeight);
-      });
+    await page.evaluate('window.scrollTo(0, document.body.scrollHeight)');
+    await new Promise(r => setTimeout(r, 1000 * 3));
+
+    const isNotNowBtn = await page.$("div > g-raised-button > div > div") !== null;
+    if (isNotNowBtn && !btnClicked) {
+      btnClicked = true;
+      console.log("Not now button found and clicked");
+      await page.click("div > g-raised-button > div > div");
+    }
+
+    const isMoreBtn = await page.$("#botstuff > div > div > div > a[href]") !== null;
+    if (isMoreBtn) {
+      try {
+        await page.click("#botstuff > div > div > div > a[href]");
+      } catch (error) { }
+    } else {
+      console.log("No more results to show");
+      break;
+    }
+
+    if (totalResults >= maxResults) {
+      console.log("Max results reached");
+      break;
     }
   }
+
   const searchList = [];
-  console.log(JSON.stringify(extractedWebsite, null, 2));
+  // console.log(JSON.stringify(extractedWebsite, null, 2));
   const urlArray = extractedWebsite.map((item) => item.website);
-  console.log(JSON.stringify(urlArray, null, 2));
+  // console.log(JSON.stringify(urlArray, null, 2));
   const extractedData = [];
+
+  fs.writeFileSync("extractedWebsites.json", JSON.stringify(urlArray, null, 2));
+
+  console.log("Total websites:", urlArray.length);
 
   for (const url of urlArray) {
     let emails = [];
@@ -87,6 +123,7 @@ async function extractSearchTextAndScrape(url) {
     phones.length = 0;
   }
 
+  fs.writeFileSync("extractedData.json", JSON.stringify(extractedData, null, 2));
   console.log(JSON.stringify(extractedData, null, 2));
 
   await browser.close();
@@ -95,19 +132,23 @@ async function extractSearchTextAndScrape(url) {
 }
 
 async function scrapeCurrentPage(page) {
-  const results = await page.evaluate(() => {
-    const anchorTags = document.querySelectorAll(".LC20lb");
-    const linksArray = [];
+  // let results = [];
+  // const results = await page.evaluate(() => {
+  // const anchorTags = document.querySelectorAll(".LC20lb");
 
-    anchorTags.forEach((anchor) => {
-      linksArray.push(anchor.parentElement.href);
-    });
+  const allAnchorTags = await page.$$("div > div > div > div > div > span > a");
+  console.log(allAnchorTags, "anchorTags");
+  const linksArray = [];
 
-    return linksArray;
-  });
-
-  const uniqueResults = Array.from(new Set(results));
-  return uniqueResults.map((url) => ({ website: url }));
+  for (const tag of allAnchorTags) {
+    const href = await tag.evaluate((el) => el?.href);
+    // console.log(href, "href");
+    linksArray.push(href);
+  }
+  // return unique links
+  return linksArray.filter((v, i, a) => a.indexOf(v) === i).map((website) => ({ website }));
 }
 
 module.exports = { extractSearchTextAndScrape };
+
+// extractSearchTextAndScrape("web development company");

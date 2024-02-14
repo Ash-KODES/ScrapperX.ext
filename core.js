@@ -11,7 +11,7 @@ function sendData() {
     // Show spinner while waiting for the server response
     document.getElementById("spinner").style.display = "block";
 
-    fetch("http://127.0.0.1:3000/scrape", {
+    fetch("http://localhost:3000/scrape", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +28,7 @@ function sendData() {
         if (data.extractedData && data.extractedData.length > 0) {
           // Log the extracted data to the console
           console.log("Extracted Data:", data.extractedData);
-          displayExtractedData(data.extractedData);
+          // displayExtractedData(data.extractedData);
 
           // Display download link
           document.getElementById("downloadLink").href = createDownloadFile(
